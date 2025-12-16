@@ -11,6 +11,7 @@ This repository contains PowerShell runbooks that automate the lifecycle managem
 | `Entra-ID-Disable-Inactive-Member-Users-90-Days.ps1` | Members (enabled) | Disable | 90 |
 | `Entra-ID-Delete-Inactive-Member-Users-180-Days.ps1` | Members (disabled) | Soft Delete | 180 |
 | `Entra-ID-Delete-Inactive-Guest-Users-90-Days.ps1` | Guests | Soft Delete | 90 |
+| `Entra-ID-Get-Inactive-Users-With-Manager-And-License.ps1` | Members with manager | Report + Group | 30 |
 
 ## Prerequisites
 
@@ -42,7 +43,8 @@ col-entra-id/
 ├── runbooks/               # Azure Automation runbooks
 │   ├── Entra-ID-Disable-Inactive-Member-Users-90-Days.ps1
 │   ├── Entra-ID-Delete-Inactive-Member-Users-180-Days.ps1
-│   └── Entra-ID-Delete-Inactive-Guest-Users-90-Days.ps1
+│   ├── Entra-ID-Delete-Inactive-Guest-Users-90-Days.ps1
+│   └── Entra-ID-Get-Inactive-Users-With-Manager-And-License.ps1
 ├── scripts/                # Supporting utility scripts
 │   └── Grant-ManagedIdentityPermissions.ps1
 └── docs/                   # Documentation site (Zensical)

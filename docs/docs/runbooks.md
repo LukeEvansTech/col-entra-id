@@ -130,6 +130,48 @@ Soft deletes identified users via `Remove-MgUser`. Users are moved to the delete
 
 ---
 
+## Entra-ID-Get-Inactive-Users-With-Manager-And-License.ps1
+
+### Purpose
+
+Identifies licensed member users with managers who have been inactive for a specified period (default 30 days). This is a reporting runbook that can optionally add identified users to a security group for line manager review.
+
+### Target Users
+
+- User type: `Member`
+- Has a manager assigned
+- Has specific licenses (configurable)
+
+### Filtering Logic
+
+1. Retrieve all licensed member users with managers
+2. Filter out users in the exclusion group
+3. Filter to users with specified licenses
+4. Identify users with no sign-in activity for the specified days
+
+### Action
+
+- Reports inactive users to Azure Automation logs
+- Optionally adds users to a specified security group (creates group if it doesn't exist)
+- Clears and refreshes group membership on each run
+
+### Default Parameters
+
+| Parameter | Default |
+|-----------|---------|
+| `InactiveDays` | `30` |
+| `LicensesToCheck` | `Microsoft 365 E5`, `Microsoft 365 E3`, `Office 365 E5`, `Office 365 E3`, `Office 365 E1` |
+| `InactiveUsersGroupName` | `"Line Manager - Inactive User Review"` |
+| `ExclusionGroupName` | `"Line Manager - Inactive User Review - Exclusion"` |
+
+### Additional Permissions Required
+
+This runbook requires an additional permission:
+
+- `GroupMember.ReadWrite.All` - Required for adding users to groups
+
+---
+
 ## Sign-In Activity Detection
 
 All runbooks use Microsoft Graph's `signInActivity` property to determine the last sign-in date. The following properties are checked (most recent wins):
