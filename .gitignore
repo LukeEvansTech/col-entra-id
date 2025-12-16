@@ -1,0 +1,36 @@
+# PowerShell
+*.ps1xml
+
+# Editor directories and files
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Local configuration and secrets
+*.local.ps1
+secrets/
+.env
+*.pem
+*.pfx
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
