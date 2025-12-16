@@ -15,54 +15,36 @@
 
 **Entra ID User Lifecycle Management** provides Azure Automation runbooks that automate the lifecycle management of inactive user accounts in Microsoft Entra ID (Azure AD). The solution follows a two-stage approach for member users and a single-stage approach for guest users.
 
-<div class="features" markdown="1">
+<div class="features">
 
-<div class="feature" markdown="1">
-
-### Two-Stage Member Lifecycle
-
-Member users are first **disabled** after 90 days of inactivity, then **deleted** after 180 days.
-
+<div class="feature">
+<h3>🔄 Two-Stage Member Lifecycle</h3>
+<p>Member users are first <strong>disabled</strong> after 90 days of inactivity, then <strong>deleted</strong> after 180 days.</p>
 </div>
 
-<div class="feature" markdown="1">
-
-### Guest Cleanup
-
-Guest users are **deleted** after 90 days of inactivity to maintain a clean directory.
-
+<div class="feature">
+<h3>👥 Guest Cleanup</h3>
+<p>Guest users are <strong>deleted</strong> after 90 days of inactivity to maintain a clean directory.</p>
 </div>
 
-<div class="feature" markdown="1">
-
-### Flexible Exclusions
-
-Exclude users by **security group**, **domain**, **department**, or **license type**.
-
+<div class="feature">
+<h3>🛡️ Flexible Exclusions</h3>
+<p>Exclude users by <strong>security group</strong>, <strong>domain</strong>, <strong>department</strong>, or <strong>license type</strong>.</p>
 </div>
 
-<div class="feature" markdown="1">
-
-### Safe by Default
-
-All runbooks default to **WhatIf mode** - preview changes before applying them.
-
+<div class="feature">
+<h3>✅ Safe by Default</h3>
+<p>All runbooks default to <strong>WhatIf mode</strong> - preview changes before applying them.</p>
 </div>
 
-<div class="feature" markdown="1">
-
-### Soft Delete
-
-Deleted users are moved to the recycle bin and **recoverable for 30 days**.
-
+<div class="feature">
+<h3>♻️ Soft Delete</h3>
+<p>Deleted users are moved to the recycle bin and <strong>recoverable for 30 days</strong>.</p>
 </div>
 
-<div class="feature" markdown="1">
-
-### Managed Identity
-
-Uses Azure **managed identity** for secure, credential-free authentication to Microsoft Graph.
-
+<div class="feature">
+<h3>🔐 Managed Identity</h3>
+<p>Uses Azure <strong>managed identity</strong> for secure, credential-free authentication to Microsoft Graph.</p>
 </div>
 
 </div>
