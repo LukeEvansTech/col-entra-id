@@ -54,6 +54,20 @@ These parameters are available across all runbooks:
 !!! info
     Guest runbooks do not include license or department filtering as these typically don't apply to guest accounts.
 
+## Reporting Runbook Parameters
+
+### Entra-ID-Get-Inactive-Users-With-Manager-And-License.ps1
+
+| Parameter | Default |
+|-----------|---------|
+| `InactiveDays` | `30` |
+| `LicensesToCheck` | `Microsoft 365 E5`, `Microsoft 365 E3`, `Office 365 E5`, `Office 365 E3`, `Office 365 E1` |
+| `InactiveUsersGroupName` | `"Line Manager - Inactive User Review"` |
+| `ExclusionGroupName` | `"Line Manager - Inactive User Review - Exclusion"` |
+
+!!! info
+    This runbook identifies inactive users with managers and optionally adds them to a group for review. It does not disable or delete users. Set `InactiveUsersGroupName` to empty string to only report without group management.
+
 ## License Include List
 
 Default licenses checked (member runbooks only):
@@ -107,6 +121,18 @@ Pass an empty array to disable license filtering:
 
 ```powershell
 .\Entra-ID-Delete-Inactive-Guest-Users-90-Days.ps1 -WhatIf $false
+```
+
+### Report inactive users with managers
+
+```powershell
+.\Entra-ID-Get-Inactive-Users-With-Manager-And-License.ps1 -InactiveDays 30
+```
+
+### Report only (no group management)
+
+```powershell
+.\Entra-ID-Get-Inactive-Users-With-Manager-And-License.ps1 -InactiveUsersGroupName ""
 ```
 
 ### Exclude additional domain
