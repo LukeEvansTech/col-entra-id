@@ -39,7 +39,7 @@
 param (
     [int]$InactiveDays = 90,
     [string]$ExclusionGroupName = "",
-    [string[]]$ExclusionDomainList = @(),
+    [string[]]$ExclusionDomainList = @("cityoflondon.police.uk", "freemens.org"),
     [bool]$DebugMode = $false,
     [bool]$WhatIf = $true
 )
@@ -143,6 +143,7 @@ function Process-InactiveGuestUsers {
                 continue
             }
 
+            # Soft delete - user moves to deleted items, recoverable for 30 days
             Remove-MgUser -UserId $user.Id -Confirm:$false
 
             Write-AutomationLog "Successfully deleted guest user '$($user.DisplayName)' ($($user.UserPrincipalName)) - Created: $($user.CreatedDate), Last sign-in: $($user.LastSignIn)" "Information"
