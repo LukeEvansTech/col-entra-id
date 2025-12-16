@@ -79,7 +79,11 @@ extra_css = ["stylesheets/extra.css"]
 # Markdown extensions
 [project.markdown_extensions]
 pymdownx.highlight = {}
-pymdownx.superfences = {}
 pymdownx.tabbed = { alternate_style = true }
 pymdownx.details = {}
 pymdownx.emoji = {}
+
+[project.markdown_extensions.pymdownx.superfences]
+custom_fences = [
+    { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
+]
