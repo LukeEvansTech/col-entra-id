@@ -35,20 +35,11 @@
 
 ### Member User Lifecycle
 
-```mermaid
-graph LR
-    A[Active User] -->|90 days inactive| B[Disabled]
-    B -->|180 days inactive| C[Soft Deleted]
-    C -->|30 days| D[Permanently Deleted]
-```
+**Active User** → 90 days inactive → **Disabled** → 180 days inactive → **Soft Deleted** → 30 days → **Permanently Deleted**
 
 ### Guest User Lifecycle
 
-```mermaid
-graph LR
-    A[Guest User] -->|90 days inactive| B[Soft Deleted]
-    B -->|30 days| C[Permanently Deleted]
-```
+**Guest User** → 90 days inactive → **Soft Deleted** → 30 days → **Permanently Deleted**
 
 ---
 

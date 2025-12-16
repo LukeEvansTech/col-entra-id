@@ -6,23 +6,14 @@ This solution implements a two-stage lifecycle for member users and a single-sta
 
 ### Member Users
 
-```mermaid
-graph LR
-    A[Active Member] -->|90 days inactive| B[Disabled]
-    B -->|180 days inactive| C[Soft Deleted]
-    C -->|30 days| D[Permanently Deleted]
-```
+**Active Member** → 90 days inactive → **Disabled** → 180 days inactive → **Soft Deleted** → 30 days → **Permanently Deleted**
 
 1. **Stage 1 - Disable (90 days)**: Active member users with no sign-in activity for 90 days are disabled
 2. **Stage 2 - Delete (180 days)**: Disabled member users with no sign-in activity for 180 days are soft deleted
 
 ### Guest Users
 
-```mermaid
-graph LR
-    A[Guest User] -->|90 days inactive| B[Soft Deleted]
-    B -->|30 days| C[Permanently Deleted]
-```
+**Guest User** → 90 days inactive → **Soft Deleted** → 30 days → **Permanently Deleted**
 
 1. **Single Stage - Delete (90 days)**: Guest users with no sign-in activity for 90 days are soft deleted
 
