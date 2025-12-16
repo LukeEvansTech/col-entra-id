@@ -1,0 +1,85 @@
+[project]
+site_name = "Entra ID User Lifecycle Management"
+site_description = "Azure Automation runbooks for managing inactive users in Microsoft Entra ID"
+site_author = "LukeEvansTech"
+site_url = "https://lukeevanstech.github.io/col-entra-id/"
+copyright = "Copyright &copy; 2025 LukeEvansTech"
+generator = false
+
+docs_dir = "docs"
+site_dir = "site"
+use_directory_urls = true
+dev_addr = "localhost:8000"
+
+# Repository integration
+repo_url = "https://github.com/LukeEvansTech/col-entra-id"
+repo_name = "GitHub"
+edit_uri = "edit/main/docs/docs"
+
+# Navigation structure
+nav = [
+    {"Home" = "index.md"},
+    {"Getting Started" = [
+        {"Setup Guide" = "setup.md"},
+        {"Permissions" = "permissions.md"}
+    ]},
+    {"Runbooks" = [
+        {"Overview" = "runbooks.md"},
+        {"Parameters" = "parameters.md"}
+    ]}
+]
+
+# Theme configuration
+[project.theme]
+name = "material"
+variant = "modern"
+language = "en"
+
+# Color schemes with automatic system preference detection
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "indigo"
+accent = "indigo"
+
+[project.theme.palette.toggle]
+icon = "material/brightness-7"
+name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "indigo"
+accent = "indigo"
+
+[project.theme.palette.toggle]
+icon = "material/brightness-4"
+name = "Switch to light mode"
+
+# Theme features
+[project.theme.features]
+"navigation.instant" = true
+"navigation.tracking" = true
+"navigation.sections" = true
+"navigation.expand" = false
+"navigation.top" = true
+"search.suggest" = true
+"search.highlight" = true
+"content.code.copy" = true
+"content.tabs.link" = true
+
+# Social links and custom CSS
+[project.extra]
+social = [
+    { icon = "fontawesome/brands/github", link = "https://github.com/LukeEvansTech/col-entra-id", name = "GitHub" }
+]
+
+extra_css = ["stylesheets/extra.css"]
+
+# Markdown extensions
+[project.markdown_extensions]
+pymdownx.highlight = {}
+pymdownx.superfences = {}
+pymdownx.tabbed = { alternate_style = true }
+pymdownx.details = {}
+pymdownx.emoji = {}

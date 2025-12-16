@@ -1,0 +1,142 @@
+/* Indigo Color Scheme for Entra ID */
+:root {
+  /* Indigo shades */
+  --md-primary-fg-color: #3F51B5;        /* Indigo */
+  --md-primary-fg-color--light: #5C6BC0; /* Light indigo */
+  --md-primary-fg-color--dark: #303F9F;  /* Dark indigo */
+  --md-accent-fg-color: #536DFE;         /* Accent indigo */
+  --md-accent-fg-color--transparent: rgba(83, 109, 254, 0.1);
+}
+
+/* Dark mode adjustments */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #5C6BC0;        /* Lighter for dark mode */
+  --md-primary-fg-color--light: #7986CB;
+  --md-primary-fg-color--dark: #3F51B5;
+  --md-accent-fg-color: #8C9EFF;         /* Softer accent */
+}
+
+/* Hero section styling */
+.md-typeset .hero {
+  padding: 3rem 0;
+  text-align: center;
+  background: linear-gradient(135deg, #3F51B5 0%, #536DFE 100%);
+  color: white;
+  border-radius: 0.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(63, 81, 181, 0.3);
+}
+
+.md-typeset .hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.md-typeset .hero p {
+  font-size: 1.25rem;
+  opacity: 0.95;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.md-typeset .hero .buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.md-typeset .hero .button {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.md-typeset .hero .button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.md-typeset .hero .button.primary {
+  background: white;
+  color: #3F51B5;
+  border-color: white;
+}
+
+.md-typeset .hero .button.primary:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Feature grid styling */
+.md-typeset .features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.md-typeset .feature {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(63, 81, 181, 0.2);
+  background: rgba(63, 81, 181, 0.05);
+  transition: all 0.3s ease;
+}
+
+.md-typeset .feature:hover {
+  border-color: rgba(63, 81, 181, 0.4);
+  background: rgba(63, 81, 181, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.15);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .feature {
+  border-color: rgba(92, 107, 192, 0.3);
+  background: rgba(92, 107, 192, 0.05);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .feature:hover {
+  border-color: rgba(92, 107, 192, 0.5);
+  background: rgba(92, 107, 192, 0.1);
+}
+
+.md-typeset .feature h3 {
+  color: var(--md-primary-fg-color);
+  margin-top: 0;
+}
+
+/* Link colors */
+.md-typeset a {
+  color: var(--md-primary-fg-color);
+}
+
+.md-typeset a:hover {
+  color: var(--md-accent-fg-color);
+}
+
+/* Code block header colors */
+.md-typeset .highlight {
+  border-left: 4px solid var(--md-primary-fg-color);
+}
+
+/* Admonition customization */
+.md-typeset .admonition.note {
+  border-left-color: var(--md-primary-fg-color);
+}
+
+.md-typeset .admonition.tip {
+  border-left-color: var(--md-accent-fg-color);
+}

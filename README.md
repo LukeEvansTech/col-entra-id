@@ -6,12 +6,11 @@ Azure Automation runbooks for identifying and managing inactive users in Microso
 
 This repository contains PowerShell runbooks that automate the lifecycle management of inactive user accounts:
 
-| Runbook | Description |
-|---------|-------------|
-| `Disable-InactiveMembers.ps1` | Disables member accounts inactive for 90+ days |
-| `Delete-InactiveMembers.ps1` | Soft deletes member accounts inactive for specified period |
-| `Disable-InactiveGuests.ps1` | Disables guest accounts inactive for specified period |
-| `Delete-InactiveGuests.ps1` | Soft deletes guest accounts inactive for specified period |
+| Runbook | Target | Action | Days |
+|---------|--------|--------|------|
+| `Entra-ID-Disable-Inactive-Member-Users-90-Days.ps1` | Members (enabled) | Disable | 90 |
+| `Entra-ID-Delete-Inactive-Member-Users-180-Days.ps1` | Members (disabled) | Soft Delete | 180 |
+| `Entra-ID-Delete-Inactive-Guest-Users-90-Days.ps1` | Guests | Soft Delete | 90 |
 
 ## Prerequisites
 
@@ -34,31 +33,49 @@ This repository contains PowerShell runbooks that automate the lifecycle managem
 
 3. **Configure parameters** and schedule as needed
 
-See [docs/SETUP.md](docs/SETUP.md) for detailed setup instructions.
+See the [full documentation](https://lukeevanstech.github.io/col-entra-id/) for detailed setup instructions.
 
 ## Repository Structure
 
 ```
-colrunbooks/
-├── runbooks/           # Azure Automation runbooks
-├── scripts/            # Supporting utility scripts
-└── docs/               # Documentation
-    ├── SETUP.md        # Setup guide
-    ├── PERMISSIONS.md  # Permission requirements
-    └── PARAMETERS.md   # Parameter reference
+col-entra-id/
+├── runbooks/               # Azure Automation runbooks
+│   ├── Entra-ID-Disable-Inactive-Member-Users-90-Days.ps1
+│   ├── Entra-ID-Delete-Inactive-Member-Users-180-Days.ps1
+│   └── Entra-ID-Delete-Inactive-Guest-Users-90-Days.ps1
+├── scripts/                # Supporting utility scripts
+│   └── Grant-ManagedIdentityPermissions.ps1
+└── docs/                   # Documentation site (Zensical)
 ```
 
 ## Documentation
 
-- [Setup Guide](docs/SETUP.md) - Azure Automation configuration
-- [Permissions](docs/PERMISSIONS.md) - Required Graph API permissions
-- [Parameters](docs/PARAMETERS.md) - Runbook parameter reference
+Full documentation is available at: https://lukeevanstech.github.io/col-entra-id/
+
+- [Setup Guide](https://lukeevanstech.github.io/col-entra-id/setup/) - Azure Automation configuration
+- [Permissions](https://lukeevanstech.github.io/col-entra-id/permissions/) - Required Graph API permissions
+- [Parameters](https://lukeevanstech.github.io/col-entra-id/parameters/) - Runbook parameter reference
+- [Runbooks](https://lukeevanstech.github.io/col-entra-id/runbooks/) - Detailed runbook documentation
 
 ## Safety Features
 
-- **WhatIf mode** - All runbooks default to `$WhatIf = $true` for safe testing
+- **WhatIf mode** - All runbooks default to preview mode (no changes made)
 - **Exclusion groups** - Skip users in specified security groups
 - **Domain exclusions** - Skip users from specified domains
 - **Department exclusions** - Skip users in specified departments
 - **License filtering** - Only process users with specific licenses
 - **Creation date check** - Skip recently created accounts
+- **Soft delete** - Deleted users recoverable for 30 days
+
+## User Lifecycle
+
+### Member Users (Two-Stage)
+
+1. **90 days inactive** → Account disabled
+2. **180 days inactive** → Account soft deleted
+3. **30 days after deletion** → Permanently deleted
+
+### Guest Users (Single-Stage)
+
+1. **90 days inactive** → Account soft deleted
+2. **30 days after deletion** → Permanently deleted

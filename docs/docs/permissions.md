@@ -20,6 +20,7 @@ The managed identity requires these Microsoft Graph **application** permissions:
 ```
 
 **Prerequisites**:
+
 - PowerShell 7.x
 - Global Administrator or Privileged Role Administrator role
 - Microsoft.Graph.Authentication module
@@ -27,7 +28,8 @@ The managed identity requires these Microsoft Graph **application** permissions:
 
 ### Manual Method (Azure Portal)
 
-Application permissions for managed identities cannot be granted through the Azure Portal. You must use PowerShell or the Microsoft Graph API.
+!!! warning
+    Application permissions for managed identities cannot be granted through the Azure Portal. You must use PowerShell or the Microsoft Graph API.
 
 ### Manual Method (PowerShell)
 
@@ -72,6 +74,7 @@ Get-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $mi.Id |
 ## Permission Propagation
 
 After granting permissions:
+
 - Allow 5-10 minutes for propagation
 - If issues persist, try disconnecting and reconnecting in the runbook
 - Check Azure AD sign-in logs for detailed error information
@@ -88,4 +91,5 @@ If you want to limit permissions:
 | Read groups | `Group.Read.All` |
 | Read licenses | `Directory.Read.All` |
 
-> **Note**: `User.ReadWrite.All` is required for both disable and soft delete operations.
+!!! note
+    `User.ReadWrite.All` is required for both disable and soft delete operations.
