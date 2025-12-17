@@ -49,7 +49,7 @@ These parameters are available across all runbooks:
 | `InactiveDays` | `90` |
 | `ExclusionGroupName` | `""` (empty) |
 | `ExclusionDomainList` | `@("cityoflondon.police.uk", "freemens.org")` |
-| `WhatIf` | `$true` |
+| `WhatIf` | `$false` |
 
 !!! info
     Guest runbooks do not include license or department filtering as these typically don't apply to guest accounts.

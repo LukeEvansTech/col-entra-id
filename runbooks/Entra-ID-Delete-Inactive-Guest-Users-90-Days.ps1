@@ -41,7 +41,7 @@ param (
     [string]$ExclusionGroupName = "",
     [string[]]$ExclusionDomainList = @("cityoflondon.police.uk", "freemens.org"),
     [bool]$DebugMode = $false,
-    [bool]$WhatIf = $true
+    [bool]$WhatIf = $false
 )
 
 $ErrorActionPreference = "Stop"

@@ -47,7 +47,8 @@ col-entra-id/
 │   └── Entra-ID-Get-Inactive-Users-With-Manager-And-License.ps1
 ├── scripts/                # Supporting utility scripts
 │   └── Grant-ManagedIdentityPermissions.ps1
-└── docs/                   # Documentation site (Zensical)
+├── docs/                   # Documentation site (Zensical)
+└── typst/                  # Handover document (auto-generated PDF)
 ```
 
 ## Documentation
@@ -58,6 +59,7 @@ Full documentation is available at: https://lukeevanstech.github.io/col-entra-id
 - [Permissions](https://lukeevanstech.github.io/col-entra-id/permissions/) - Required Graph API permissions
 - [Parameters](https://lukeevanstech.github.io/col-entra-id/parameters/) - Runbook parameter reference
 - [Runbooks](https://lukeevanstech.github.io/col-entra-id/runbooks/) - Detailed runbook documentation
+- [Handover Document (PDF)](typst/handover.pdf) - Printable handover document
 
 ## Safety Features
 
