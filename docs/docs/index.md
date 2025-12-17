@@ -136,10 +136,4 @@ The runbooks are pre-configured with these exclusions:
 
 ---
 
-## License
-
-Private and proprietary to LukeEvansTech.
-
----
-
-Made with Azure Automation and [Zensical](https://zensical.org/)
+Developed for the City of London Corporation by [LukeEvansTech](https://github.com/LukeEvansTech)
