@@ -52,6 +52,18 @@ graph LR
 
 ---
 
+## Azure Environment
+
+| Property | Value |
+|----------|-------|
+| Automation Account | `col-uks-mgmt-EntraID-aa` |
+| Resource Group | `col-uks-rg-mgmt` |
+| Location | UK South |
+| Subscription | `col-sub-cop-management` |
+| Subscription ID | `280f1edf-4eca-4558-bdaf-12db0a42dabc` |
+
+---
+
 ## Quick Start
 
 ### Prerequisites

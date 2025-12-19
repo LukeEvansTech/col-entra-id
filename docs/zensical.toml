@@ -25,7 +25,11 @@ nav = [
     ]},
     {"Runbooks" = [
         {"Overview" = "runbooks.md"},
-        {"Parameters" = "parameters.md"}
+        {"Disable Members (90 Days)" = "runbook-disable-members.md"},
+        {"Delete Members (180 Days)" = "runbook-delete-members.md"},
+        {"Delete Guests (90 Days)" = "runbook-delete-guests.md"},
+        {"Report Inactive Users" = "runbook-report-inactive.md"},
+        {"Parameters Reference" = "parameters.md"}
     ]}
 ]
 
@@ -78,6 +82,7 @@ extra_css = ["stylesheets/extra.css"]
 
 # Markdown extensions
 [project.markdown_extensions]
+admonition = {}
 pymdownx.highlight = {}
 pymdownx.tabbed = { alternate_style = true }
 pymdownx.details = {}

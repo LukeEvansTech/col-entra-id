@@ -13,6 +13,16 @@ This repository contains PowerShell runbooks that automate the lifecycle managem
 | `Entra-ID-Delete-Inactive-Guest-Users-90-Days.ps1` | Guests | Soft Delete | 90 |
 | `Entra-ID-Get-Inactive-Users-With-Manager-And-License.ps1` | Members with manager | Report + Group | 30 |
 
+## Azure Environment
+
+| Property | Value |
+|----------|-------|
+| Automation Account | `col-uks-mgmt-EntraID-aa` |
+| Resource Group | `col-uks-rg-mgmt` |
+| Location | UK South |
+| Subscription | `col-sub-cop-management` |
+| Subscription ID | `280f1edf-4eca-4558-bdaf-12db0a42dabc` |
+
 ## Prerequisites
 
 - Azure Automation account with PowerShell 7.x runtime

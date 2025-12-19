@@ -7,8 +7,8 @@ This solution implements a two-stage lifecycle for member users and a single-sta
 ### Member Users
 
 ```mermaid
-graph LR
-    A[Active Member] -->|90 days inactive| B[Disabled]
+flowchart LR
+    A[Active Account] -->|90 days inactive| B[Account Disabled]
     B -->|180 days inactive| C[Soft Deleted]
     C -->|30 days| D[Permanently Deleted]
 ```
@@ -19,8 +19,8 @@ graph LR
 ### Guest Users
 
 ```mermaid
-graph LR
-    A[Guest User] -->|90 days inactive| B[Soft Deleted]
+flowchart LR
+    A[Active Account] -->|90 days inactive| B[Soft Deleted]
     B -->|30 days| C[Permanently Deleted]
 ```
 
@@ -28,147 +28,50 @@ graph LR
 
 ---
 
-## Entra-ID-Disable-Inactive-Member-Users-90-Days.ps1
+## Runbook Summary
 
-### Purpose
+| Runbook | Target | Action | Days | Details |
+|---------|--------|--------|------|---------|
+| Disable Inactive Member Users | Members (enabled) | Disable | 90 | [View Details](runbook-disable-members.md) |
+| Delete Inactive Member Users | Members (disabled) | Soft Delete | 180 | [View Details](runbook-delete-members.md) |
+| Delete Inactive Guest Users | Guests | Soft Delete | 90 | [View Details](runbook-delete-guests.md) |
+| Report Inactive Users | Members with manager | Report + Group | 30 | [View Details](runbook-report-inactive.md) |
+
+---
+
+## Runbook Details
+
+### [Disable Inactive Member Users (90 Days)](runbook-disable-members.md)
 
 Identifies and disables member users who have been inactive for 90+ days. This is the first stage of the member user lifecycle.
 
-### Target Users
+- **Target**: Enabled member users
+- **Action**: Sets `accountEnabled` to `$false`
+- **Filters**: Exclusion group, domains, departments, licenses
 
-- User type: `Member`
-- Account status: `Enabled`
-- Excludes Cross-Tenant Sync users (UPN contains `#EXT#`)
-
-### Filtering Logic
-
-1. Retrieve all enabled member users
-2. Filter out users created within the last 90 days
-3. Filter out users in the exclusion group
-4. Filter out users in excluded departments
-5. Filter out users from excluded domains
-6. Filter to users with specified licenses
-7. Identify users with no sign-in activity for 90+ days
-
-### Action
-
-Sets `accountEnabled` to `$false` for identified users.
-
-### Default Exclusions
-
-| Type | Values |
-|------|--------|
-| Group | `Line Manager - Inactive User Review - Exclusion` |
-| Domains | `cityoflondon.police.uk`, `freemens.org` |
-| Departments | `Members` |
-
----
-
-## Entra-ID-Delete-Inactive-Member-Users-180-Days.ps1
-
-### Purpose
+### [Delete Inactive Member Users (180 Days)](runbook-delete-members.md)
 
 Identifies and soft deletes disabled member users who have been inactive for 180+ days. This is the second stage of the member user lifecycle.
 
-### Target Users
+- **Target**: Disabled member users (previously disabled by 90-day runbook)
+- **Action**: Soft delete via `Remove-MgUser`
+- **Recovery**: 30 days in deleted items
 
-- User type: `Member`
-- Account status: **Disabled** (`accountEnabled eq false`)
-- Excludes Cross-Tenant Sync users (UPN contains `#EXT#`)
-
-### Filtering Logic
-
-1. Retrieve all **disabled** member users
-2. Filter out users created within the last 180 days
-3. Filter out users in the exclusion group
-4. Filter out users in excluded departments
-5. Filter out users from excluded domains
-6. Filter to users with specified licenses
-7. Identify users with no sign-in activity for 180+ days
-
-### Action
-
-Soft deletes identified users via `Remove-MgUser`. Users are moved to the deleted items container and can be recovered for 30 days.
-
-### Default Exclusions
-
-Same as the 90-day disable runbook.
-
----
-
-## Entra-ID-Delete-Inactive-Guest-Users-90-Days.ps1
-
-### Purpose
+### [Delete Inactive Guest Users (90 Days)](runbook-delete-guests.md)
 
 Identifies and soft deletes guest users who have been inactive for 90+ days.
 
-### Target Users
+- **Target**: All guest users (enabled or disabled)
+- **Action**: Soft delete via `Remove-MgUser`
+- **Simplified**: No license or department filtering
 
-- User type: `Guest`
-- Any account status (enabled or disabled)
+### [Report Inactive Users with Manager](runbook-report-inactive.md)
 
-### Filtering Logic
+Identifies licensed member users with managers who have been inactive for a specified period (default 30 days). Optionally adds users to a security group for line manager review.
 
-1. Retrieve all guest users
-2. Filter out users created within the last 90 days
-3. Filter out users in the exclusion group (if specified)
-4. Filter out users from excluded domains
-5. Identify users with no sign-in activity for 90+ days
-
-### Action
-
-Soft deletes identified users via `Remove-MgUser`. Users are moved to the deleted items container and can be recovered for 30 days.
-
-### Default Exclusions
-
-| Type | Values |
-|------|--------|
-| Domains | `cityoflondon.police.uk`, `freemens.org` |
-
-!!! info
-    Guest runbooks do not filter by license or department as these typically don't apply to guest accounts.
-
----
-
-## Entra-ID-Get-Inactive-Users-With-Manager-And-License.ps1
-
-### Purpose
-
-Identifies licensed member users with managers who have been inactive for a specified period (default 30 days). This is a reporting runbook that can optionally add identified users to a security group for line manager review.
-
-### Target Users
-
-- User type: `Member`
-- Has a manager assigned
-- Has specific licenses (configurable)
-
-### Filtering Logic
-
-1. Retrieve all licensed member users with managers
-2. Filter out users in the exclusion group
-3. Filter to users with specified licenses
-4. Identify users with no sign-in activity for the specified days
-
-### Action
-
-- Reports inactive users to Azure Automation logs
-- Optionally adds users to a specified security group (creates group if it doesn't exist)
-- Clears and refreshes group membership on each run
-
-### Default Parameters
-
-| Parameter | Default |
-|-----------|---------|
-| `InactiveDays` | `30` |
-| `LicensesToCheck` | `Microsoft 365 E5`, `Microsoft 365 E3`, `Office 365 E5`, `Office 365 E3`, `Office 365 E1` |
-| `InactiveUsersGroupName` | `"Line Manager - Inactive User Review"` |
-| `ExclusionGroupName` | `"Line Manager - Inactive User Review - Exclusion"` |
-
-### Additional Permissions Required
-
-This runbook requires an additional permission:
-
-- `GroupMember.ReadWrite.All` - Required for adding users to groups
+- **Target**: Licensed members with managers
+- **Action**: Report only (no disable/delete)
+- **Optional**: Add to review group
 
 ---
 
@@ -184,6 +87,35 @@ If no sign-in activity is recorded, the user is considered inactive.
 
 ---
 
+## Default Exclusions
+
+All member runbooks are pre-configured with these exclusions:
+
+| Type | Values |
+|------|--------|
+| Group | `Line Manager - Inactive User Review - Exclusion` |
+| Domains | `cityoflondon.police.uk`, `freemens.org` |
+| Departments | `Members` |
+
+!!! info
+    Guest runbooks only filter by domain, not by license or department.
+
+---
+
+## Safety Features
+
+All runbooks include multiple safety mechanisms:
+
+- **WhatIf Mode** - All runbooks support preview mode
+- **Exclusion Groups** - Skip users in specified security groups
+- **Domain Exclusions** - Skip users from specified domains
+- **Department Exclusions** - Skip users in specified departments
+- **License Filtering** - Only process users with specific licenses
+- **Creation Date Check** - Skip recently created accounts
+- **Soft Delete** - Deleted users recoverable for 30 days
+
+---
+
 ## Output
 
 Each runbook produces:
@@ -191,22 +123,6 @@ Each runbook produces:
 1. **Summary logs** - Count of users processed, filtered, and actioned
 2. **User list** - Full list of inactive users output to the job stream
 3. **Sample output** - First 10 users displayed in logs for quick review
-
-### Sample Log Output
-
-```
-[2025-01-15 09:00:00] Starting Inactive Member Users runbook (Azure Automation)
-[2025-01-15 09:00:00] User action: Disable
-[2025-01-15 09:00:00] WhatIf mode: True
-[2025-01-15 09:00:01] Connected to Microsoft Graph. Tenant ID: xxx | Auth Type: ManagedIdentity
-[2025-01-15 09:00:02] Retrieved 5000 active member users
-[2025-01-15 09:00:02] Excluded 50 users created within the last 90 days
-[2025-01-15 09:00:03] Excluded 25 users that are members of 'Line Manager - Inactive User Review - Exclusion'
-[2025-01-15 09:00:03] Found 150 inactive member users (inactive >= 90 days)
-[2025-01-15 09:00:03] WhatIf: Would disable user 'John Doe' (john.doe@contoso.com)
-...
-[2025-01-15 09:00:10] Runbook execution complete
-```
 
 ---
 

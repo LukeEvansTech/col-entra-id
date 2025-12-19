@@ -106,6 +106,24 @@
 
 This solution provides Azure Automation runbooks that automate the lifecycle management of inactive user accounts in Microsoft Entra ID (Azure AD). The solution implements a two-stage approach for member users and a single-stage approach for guest users.
 
+== Azure Environment
+
+#figure(
+  table(
+    columns: (1fr, 2fr),
+    align: (left, left),
+    fill: (x, y) => if y == 0 { primary-color } else if calc.odd(y) { rgb("#f5f5f5") } else { white },
+    text(fill: white, weight: "bold")[Property],
+    text(fill: white, weight: "bold")[Value],
+    [Automation Account], [`col-uks-mgmt-EntraID-aa`],
+    [Resource Group], [`col-uks-rg-mgmt`],
+    [Location], [UK South],
+    [Subscription], [`col-sub-cop-management`],
+    [Subscription ID], [`280f1edf-4eca-4558-bdaf-12db0a42dabc`],
+  ),
+  caption: [Azure Automation Environment],
+)
+
 == Key Features
 
 - *Two-Stage Member Lifecycle* -- Member users are first disabled after 90 days of inactivity, then deleted after 180 days
