@@ -250,7 +250,9 @@ Guest users follow a simplified single-stage lifecycle:
 
 = Default Exclusions
 
-All runbooks are pre-configured with these exclusions:
+== Member Runbooks
+
+Member runbooks are pre-configured with these exclusions:
 
 #figure(
   table(
@@ -263,24 +265,44 @@ All runbooks are pre-configured with these exclusions:
     [Departments], [`Members`],
     [Exclusion Group], [`Line Manager - Inactive User Review - Exclusion`],
   ),
-  caption: [Default Exclusion Configuration],
+  caption: [Member Runbook Exclusions],
+)
+
+== Guest Runbooks
+
+Guest runbooks only filter by domain:
+
+#figure(
+  table(
+    columns: (1fr, 2fr),
+    align: (left, left),
+    fill: (x, y) => if y == 0 { primary-color } else if calc.odd(y) { rgb("#f5f5f5") } else { white },
+    text(fill: white, weight: "bold")[Type],
+    text(fill: white, weight: "bold")[Values],
+    [Domains], [`cityoflondon.police.uk`, `freemens.org`],
+  ),
+  caption: [Guest Runbook Exclusions],
 )
 
 #v(1em)
 
 #note-box[
-  *Note:* Guest runbooks do not filter by license or department as these typically don't apply to guest accounts.
+  *Note:* Guest runbooks do not use group or department exclusions as these typically don't apply to guest accounts.
 ]
 
 #pagebreak()
 
-= Setup Requirements
+= Setup & Configuration
 
-== Prerequisites
+== Current Configuration
 
-- Azure Automation account with *PowerShell 7.x* runtime
-- System-assigned *managed identity* enabled
-- Microsoft Graph PowerShell modules installed
+The Azure Automation environment is fully configured and operational:
+
+- System-assigned managed identity enabled
+- Microsoft Graph permissions granted
+- PowerShell modules imported (Runtime 7.2)
+- Runbooks imported and published
+- Schedules configured
 
 == Required Modules
 
@@ -343,6 +365,45 @@ The runbooks include multiple safety mechanisms:
 
 #note-box[
   *Recommendation:* Always run with `-WhatIf $true` first to review which users would be affected before executing with `-WhatIf $false`.
+]
+
+#pagebreak()
+
+= Scripts
+
+== Grant-ManagedIdentityPermissions.ps1
+
+This script grants the required Microsoft Graph API permissions to the Azure Automation account's managed identity.
+
+*Usage:*
+```powershell
+./scripts/Grant-ManagedIdentityPermissions.ps1 -AutomationAccountName "col-uks-mgmt-EntraID-aa"
+```
+
+*Requirements:*
+- PowerShell 7.x with Microsoft.Graph modules
+- Global Admin or Privileged Role Administrator role
+
+*Permissions Granted:*
+#figure(
+  table(
+    columns: (1fr, 2fr),
+    align: (left, left),
+    fill: (x, y) => if y == 0 { primary-color } else if calc.odd(y) { rgb("#f5f5f5") } else { white },
+    text(fill: white, weight: "bold")[Permission],
+    text(fill: white, weight: "bold")[Purpose],
+    [`User.Read.All`], [Read user properties including sign-in activity],
+    [`User.ReadWrite.All`], [Disable and delete user accounts],
+    [`Directory.Read.All`], [Read directory data],
+    [`Group.Read.All`], [Read exclusion group membership],
+  ),
+  caption: [Permissions Granted by Script],
+)
+
+#v(1em)
+
+#note-box[
+  *Note:* The script is idempotent - it can be run multiple times safely. Already-assigned permissions are skipped.
 ]
 
 #pagebreak()

@@ -16,7 +16,7 @@ The managed identity requires these Microsoft Graph **application** permissions:
 ### Using the Script (Recommended)
 
 ```powershell
-./scripts/Grant-ManagedIdentityPermissions.ps1 -AutomationAccountName "your-automation-account-name"
+./scripts/Grant-ManagedIdentityPermissions.ps1 -AutomationAccountName "col-uks-mgmt-EntraID-aa"
 ```
 
 **Prerequisites**:
@@ -37,7 +37,7 @@ The managed identity requires these Microsoft Graph **application** permissions:
 Connect-MgGraph -Scopes "Application.Read.All", "AppRoleAssignment.ReadWrite.All"
 
 # Get service principals
-$managedIdentity = Get-MgServicePrincipal -Filter "displayName eq 'your-automation-account'"
+$managedIdentity = Get-MgServicePrincipal -Filter "displayName eq 'col-uks-mgmt-EntraID-aa'"
 $graphApp = Get-MgServicePrincipal -Filter "appId eq '00000003-0000-0000-c000-000000000000'"
 
 # Get the permission
@@ -66,7 +66,7 @@ New-MgServicePrincipalAppRoleAssignment `
 ```powershell
 Connect-MgGraph -Scopes "Application.Read.All"
 
-$mi = Get-MgServicePrincipal -Filter "displayName eq 'your-automation-account'"
+$mi = Get-MgServicePrincipal -Filter "displayName eq 'col-uks-mgmt-EntraID-aa'"
 Get-MgServicePrincipalAppRoleAssignment -ServicePrincipalId $mi.Id |
     Select-Object AppRoleId, ResourceDisplayName
 ```

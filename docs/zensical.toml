@@ -30,6 +30,9 @@ nav = [
         {"Delete Guests (90 Days)" = "runbook-delete-guests.md"},
         {"Report Inactive Users" = "runbook-report-inactive.md"},
         {"Parameters Reference" = "parameters.md"}
+    ]},
+    {"Scripts" = [
+        {"Overview" = "scripts.md"}
     ]}
 ]
 

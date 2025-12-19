@@ -78,19 +78,13 @@ graph LR
 
 ### Installation
 
-1. **Grant permissions** to your managed identity:
+The environment is already configured. See the [Setup Guide](setup.md) for current configuration details.
 
-    ```powershell
-    ./scripts/Grant-ManagedIdentityPermissions.ps1 -AutomationAccountName "your-automation-account"
-    ```
+To grant permissions to the managed identity:
 
-2. **Import runbooks** into your Azure Automation account
-
-3. **Test with WhatIf mode** (enabled by default)
-
-4. **Schedule runbooks** for regular execution
-
-See the [Setup Guide](setup.md) for detailed instructions.
+```powershell
+./scripts/Grant-ManagedIdentityPermissions.ps1 -AutomationAccountName "col-uks-mgmt-EntraID-aa"
+```
 
 ---
 
@@ -138,13 +132,22 @@ col-entra-id/
 
 ## Default Exclusions
 
-The runbooks are pre-configured with these exclusions:
+### Member Runbooks
 
 | Exclusion Type | Values |
 |----------------|--------|
 | Domains | `cityoflondon.police.uk`, `freemens.org` |
 | Departments | `Members` |
 | Group | `Line Manager - Inactive User Review - Exclusion` |
+
+### Guest Runbooks
+
+| Exclusion Type | Values |
+|----------------|--------|
+| Domains | `cityoflondon.police.uk`, `freemens.org` |
+
+!!! info
+    Guest runbooks only filter by domain. They do not use group or department exclusions as these typically don't apply to guest accounts.
 
 ---
 
