@@ -75,11 +75,17 @@ Full documentation is available at: https://lukeevanstech.github.io/col-entra-id
 
 ### Member Users (Two-Stage)
 
-1. **90 days inactive** → Account disabled
-2. **180 days inactive** → Account soft deleted
-3. **30 days after deletion** → Permanently deleted
+```mermaid
+flowchart LR
+    A[Active Account] -->|90 days inactive| B[Account Disabled]
+    B -->|180 days inactive| C[Soft Deleted]
+    C -->|30 days| D[Permanently Deleted]
+```
 
 ### Guest Users (Single-Stage)
 
-1. **90 days inactive** → Account soft deleted
-2. **30 days after deletion** → Permanently deleted
+```mermaid
+flowchart LR
+    A[Active Account] -->|90 days inactive| B[Soft Deleted]
+    B -->|30 days| C[Permanently Deleted]
+```
